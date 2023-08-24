@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="usuario">Usuário</string>
+    <string name="senha">Senha</string>
+    <string name="login">LOGIN</string>
+    <string name="title_cores">Múltiplas cores</string>
+    <string name="resetar_cores">Resetar cores</string>
+</resources>
