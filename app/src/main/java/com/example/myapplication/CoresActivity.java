@@ -21,7 +21,6 @@ public class CoresActivity extends AppCompatActivity {
     private LinearLayout linearLayout4;
     private LinearLayout linearLayout5;
     private SharedPreferences preferences;
-    private final List<Drawable> originalsBackgrounds = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +42,9 @@ public class CoresActivity extends AppCompatActivity {
         linearLayout5.setOnClickListener(this::onClick);
 
         Button resetButton = findViewById(R.id.resetColorsButton);
-        resetButton.setOnClickListener(this::resetColors);
-        backupOriginalColors();
         checkSavedColor();
+
+        resetButton.setOnClickListener(this::resetColors);
     }
 
     private void checkSavedColor() {
@@ -62,36 +61,28 @@ public class CoresActivity extends AppCompatActivity {
     }
 
     private void setColor(LinearLayout linearLayout, int color) {
-        ((ColorDrawable) linearLayout.getBackground()).setColor(color);
+        linearLayout.setBackgroundColor(color);
     }
 
     private void onClick(View view) {
-        Drawable background = view.getBackground();
-        linearLayout1.setBackground(background);
-        linearLayout2.setBackground(background);
-        linearLayout3.setBackground(background);
-        linearLayout4.setBackground(background);
-        linearLayout5.setBackground(background);
+        int color = ((ColorDrawable) view.getBackground()).getColor();
+        linearLayout1.setBackgroundColor(color);
+        linearLayout2.setBackgroundColor(color);
+        linearLayout3.setBackgroundColor(color);
+        linearLayout4.setBackgroundColor(color);
+        linearLayout5.setBackgroundColor(color);
 
         preferences.edit()
-                .putInt(KEY_COLOR, ((ColorDrawable) background).getColor())
+                .putInt(KEY_COLOR, color)
                 .apply();
     }
 
-    private void backupOriginalColors() {
-        originalsBackgrounds.add(linearLayout1.getBackground());
-        originalsBackgrounds.add(linearLayout2.getBackground());
-        originalsBackgrounds.add(linearLayout3.getBackground());
-        originalsBackgrounds.add(linearLayout4.getBackground());
-        originalsBackgrounds.add(linearLayout5.getBackground());
-    }
-
     private void resetColors(View view) {
-        linearLayout1.setBackground(originalsBackgrounds.get(0));
-        linearLayout2.setBackground(originalsBackgrounds.get(1));
-        linearLayout3.setBackground(originalsBackgrounds.get(2));
-        linearLayout4.setBackground(originalsBackgrounds.get(3));
-        linearLayout5.setBackground(originalsBackgrounds.get(4));
+        linearLayout1.setBackgroundResource(R.color.black);
+        linearLayout2.setBackgroundResource(R.color.red);
+        linearLayout3.setBackgroundResource(R.color.yellow);
+        linearLayout4.setBackgroundResource(R.color.blue);
+        linearLayout5.setBackgroundResource(R.color.black);
 
         preferences.edit().remove(KEY_COLOR).apply();
     }
